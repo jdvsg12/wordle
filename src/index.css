@@ -6,10 +6,15 @@
   @apply z-30 absolute flex flex-col px-10  py-5 inset-0 m-auto w-568 h-fit bg-gray-100 rounded-xl border border-black;
 }
 
+.bgOpneModal {
+  @apply fixed inset-0 z-20 w-screen h-screen bg-gray-100 opacity-70
+}
+
 .closeModal,
 .closeStatistic {
   @apply hidden;
 }
+
 .letterFont {
   @apply font-roboto;
 }
@@ -51,7 +56,7 @@
 .theme-switch *,
 .theme-switch *::before,
 .theme-switch *::after {
-  @apply box-border text-[length:var(--toggle-size)] m-0 p-0;
+  @apply z-10 box-border text-[length:var(--toggle-size)] m-0 p-0;
   -webkit-box-sizing: border-box;
 }
 .theme-switch__container {

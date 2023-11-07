@@ -4,12 +4,14 @@ import question from "../assets/question.svg"
 
 function ModalInfoGame() {
   const [modal, setModal] = useState("closeModal");
+  const [bgModal, setBgModal] = useState("closeModal");
   function handleModal() {
     modal === "openModal" ? setModal('closeModal') : setModal('openModal')
+    bgModal === "bgOpneModal" ? setBgModal('closeModal') : setBgModal('bgOpneModal')
   }
   return (<>
     <img onClick={handleModal} className="w-8 cursor-pointer" src={question} alt="modal info del juego" title="simbolo de preguunta" />
-
+    <div className={bgModal}></div>
     <article className={modal}>
       <h2 className="text-center font-bold text-3xl mb-2">Cómo jugar</h2>
       <p className="text-lg my-1">Adivina la palabra oculta en cinco intentos.</p>

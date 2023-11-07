@@ -1,7 +1,6 @@
 import ModalInfoGame from "../components/ModalInfoGame";
 import ModalStatistic from "./ModalStatistic";
-
-import InputToggle from "./inputToggle";
+import InputToggle from "./InputToggle";
 
 
 function Nav() {
