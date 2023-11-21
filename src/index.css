@@ -23,7 +23,7 @@
 }
 
 .letters {
-  @apply flex justify-center items-center w-14 md:w-76 md:h-76 font-bold text-3xl rounded-md border-black border;
+  @apply flex justify-center items-center w-14 h-14 md:w-76 md:h-76 font-bold text-3xl rounded-md border-black border;
 }
 
 .btn {
