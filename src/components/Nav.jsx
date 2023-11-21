@@ -5,7 +5,7 @@ import InputToggle from "./InputToggle";
 
 function Nav() {
   return (
-    <nav className='flex justify-between items-center w-638 py-3 px-4 bg-gray-200 rounded-2xl mt-76 mx-auto'>
+    <nav className='nav dark:bg-blue-dark-400 dark:text-white'>
       <ModalInfoGame />
       <h1 className='text-4xl text-center font-bold'>WORDLE</h1>
       <div className="flex items-center justify-center">

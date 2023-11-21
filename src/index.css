@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.nav {
+  @apply flex justify-between items-center w-11/12 md:w-638 py-3 px-4 bg-gray-200 rounded-2xl mx-auto
+}
 .openModal {
-  @apply z-30 absolute flex flex-col px-10  py-5 inset-0 m-auto w-568 h-fit bg-gray-100 rounded-xl border border-black;
+  @apply z-30 absolute flex flex-col px-10  py-5 inset-0 m-auto w-568 h-fit bg-gray-100 rounded-xl border border-black dark:bg-blue-dark-500 dark:border-white;
 }
 
 .bgOpneModal {
-  @apply fixed inset-0 z-20 w-screen h-screen bg-gray-100 opacity-70
+  @apply fixed inset-0 z-20 w-screen h-screen bg-gray-100 opacity-70 dark:bg-[#262B3CE3] dark:text-white
 }
 
 .closeModal,
@@ -20,11 +23,27 @@
 }
 
 .letters {
-  @apply flex justify-center items-center w-76 h-76 font-bold text-3xl rounded-md border-black border;
+  @apply flex justify-center items-center w-14 md:w-76 md:h-76 font-bold text-3xl rounded-md border-black border;
 }
+
 .btn {
   @apply w-256 py-2 mx-auto bg-green text-white rounded-md text-lg font-bold;
 }
+
+.correct {
+  @apply letters bg-green border-none text-white animate-rotate-x
+}
+
+.includes {
+  @apply letters bg-yellow border-none text-white animate-rotate-x
+}
+
+
+
+.fail {
+  @apply letters bg-gray-200 animate-rotate-x
+}
+
 .theme-switch {
   --toggle-size: 13px;
 
