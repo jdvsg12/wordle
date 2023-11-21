@@ -6,7 +6,7 @@
   @apply flex justify-between items-center w-11/12 md:w-638 py-3 px-4 bg-gray-200 rounded-2xl mx-auto
 }
 .openModal {
-  @apply z-30 absolute flex flex-col px-10  py-5 inset-0 m-auto w-568 h-fit bg-gray-100 rounded-xl border border-black dark:bg-blue-dark-500 dark:border-white;
+  @apply z-30 absolute flex flex-col px-10  py-5 inset-0 m-auto w-11/12 md:w-568 h-fit bg-gray-100 rounded-xl border border-black dark:bg-blue-dark-500 dark:border-white;
 }
 
 .bgOpneModal {
