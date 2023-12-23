@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cronometro from "./Chronometer";
 import statistic from "../assets/statistic.svg";
 
 
 
 function ModalStatistic() {
+    const gamesInLocalStorage = JSON.parse(localStorage.getItem('game'));
+    const winnerInLocalStorage = JSON.parse(localStorage.getItem('winner'));
     const [statisticModal, setStatisticModal] = useState('closeModal');
     const [bgStatisticModal, setBgStatisticModal] = useState('closeModal');
-    const [victorys, setVictorys] = useState(['8']);
-    const [games, setGames] = useState(['2'])
+    const [winner, setWinner] = useState()
+    const [games, setGames] = useState()
+
+    useEffect(() => {
+        setGames(gamesInLocalStorage)
+        setWinner(winnerInLocalStorage)
+    }, [gamesInLocalStorage, winnerInLocalStorage])
 
     function handleModal() {
         statisticModal === "openModal" ? setStatisticModal('closeModal') : setStatisticModal('openModal')
@@ -26,11 +33,12 @@ function ModalStatistic() {
                     <p className="text-center text-xl">Jugadas</p>
                 </div>
                 <div className="grid place-items-center">
-                    <h4 className="text-3xl my-1 font-bold">{victorys}</h4>
+                    <h4 className="text-3xl my-1 font-bold">{winner}</h4>
                     <p className="text-center text-xl">Victorias</p>
                 </div>
             </article>
             <article>
+                <h3 className="text-xl text-center my-1">Ganaste</h3>
                 <h4 className="text-xl text-center my-1">SIGUIENTE PALABRA</h4>
                 <Cronometro />
             </article>

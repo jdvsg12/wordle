@@ -26,6 +26,9 @@
   @apply flex justify-center items-center w-14 h-14 md:w-76 md:h-76 font-bold text-3xl rounded-md border-black border;
 }
 
+.key {
+  @apply flex justify-center items-center rounded-md border-black border w-44 h-44 font-light text-2sm cursor-pointer border-none bg-gray-250 dark:bg-blue-dark-200 dark:text-white;
+}
 .btn {
   @apply w-256 py-2 mx-auto bg-green text-white rounded-md text-lg font-bold;
 }
@@ -38,7 +41,9 @@
   @apply letters bg-yellow border-none text-white animate-rotate-x
 }
 
-
+.empty {
+  @apply letters bg-white
+}
 
 .fail {
   @apply letters bg-gray-200 animate-rotate-x

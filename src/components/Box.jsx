@@ -1,22 +1,8 @@
 
-
-function Box({ letterPress, letterWord, wordRandom }) {
-
-    const matchLetter = (letterPress, letterWord) => {
-    
-        if (letterWord === letterPress) {
-            return "correct"
-        }
-        else if (wordRandom.includes(letterPress)) {
-            return "includes"
-        }
-        else {
-            return "fail"
-        }
-    }
+function Box({ letterPress, stateLetter }) {
 
     return (
-        <div className={matchLetter(letterPress, letterWord)}>{letterPress}</div>
+        <div className={stateLetter} >{letterPress}</div>
     )
 }
 

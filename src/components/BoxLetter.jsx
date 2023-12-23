@@ -1,24 +1,34 @@
 import { useState, useEffect } from "react";
 import { WORDS_LIST } from "../services/word";
 import Keyboard from "../components/Keyboard";
-// import Box from "../components/Box";
 import ToastNotification from "./ToastNotification";
 import BoxRow from "./BoxRow";
+import BoxEmpty from "./BoxEmpty";
+import BoxCurrent from "./BoxCurrent";
 
 const maxNumberletter = "5";
 
 function BoxLetter() {
   const [words, setWords] = useState([...WORDS_LIST]);
-  const [stateLetter, useStateLetter] = useState([]);
   const [secondsInLocalStorage, setSecondsInLocalStorage] = useState(null);
+  const [turn, setTurn] = useState(4);
+  const [completWord, setCompletWord] = useState([]);
   const [letterPress, setLetterPress] = useState([]);
   const [showToast, setShowToast] = useState(false)
-  const [wordShow, setWordShow] = useState([]);
+  const [winner, setWinner] = useState(() => {
+    const winnerLocalStorage = localStorage.getItem('winner');
+    return winnerLocalStorage === null ? 0 : JSON.parse(winnerLocalStorage)
+  })
+  const [game, setGame] = useState(() => {
+    const gamesLocalStorage = localStorage.getItem('game');
+    return gamesLocalStorage === null ? 0 : JSON.parse(gamesLocalStorage)
+  })
 
   const getRandomWord = () => {
     const randomNumber = Math.floor(Math.random() * words.length);
     return words[randomNumber].toUpperCase();
   };
+
   const [wordRandom, setWordRandom] = useState(() => {
     const storedWord = localStorage.getItem('wordRandomLocal');
     return storedWord ? JSON.parse(storedWord) : getRandomWord();
@@ -26,7 +36,9 @@ function BoxLetter() {
 
   useEffect(() => {
     localStorage.setItem("wordRandomLocal", JSON.stringify(wordRandom));
-  }, [wordRandom]);
+    localStorage.setItem("winner", winner);
+    localStorage.setItem("game", JSON.parse(game));
+  }, [wordRandom, winner, game]);
 
   useEffect(() => {
     const secondsFromLocalStorage = localStorage.getItem('seconds') * 1000;
@@ -69,48 +81,32 @@ function BoxLetter() {
   function handleValidator() {
     const findWord = words.includes(letterPress.join('').toLowerCase())
     if (letterPress.length >= maxNumberletter && findWord === true) {
-      wordShow.map(({ letter, letterPress }) => {
-        if (letter === letterPress) {
-          useStateLetter(stateLetter => [...stateLetter, ...["correct"]])
-        }
-        else if (wordRandom.split("").includes(letterPress)) {
-          useStateLetter(stateLetter => [...stateLetter, ...["includes"]])
-        }
-        else {
-          useStateLetter(stateLetter => [...stateLetter, ...["fail"]])
-        }
-      })
-
-      for (let i in wordRandom) {
-        const letter = wordRandom[i];
-        const letterPressValue = letterPress[i];
-        const letterState = stateLetter[i]
-        const objeto = {
-          letter: letter,
-          letterPress: letterPressValue,
-          stateLetter: letterState
-        };
-
+      if (wordRandom === letterPress.join("")) {
+        setWinner(winner + 1)
+        setGame(game + 1)
+        setCompletWord([])
+        setLetterPress([])
+        const newRandomWord = getRandomWord();
+        setWordRandom(newRandomWord)
       }
+      else {
+        setTurn(turn - 1)
+        setCompletWord([...completWord, letterPress])
+      }
+
+      if (turn === 0) {
+        setCompletWord([])
+        setTurn(4)
+        setGame(game + 1)
+        setLetterPress([])
+        setSecondsInLocalStorage(300)
+        const newRandomWord = getRandomWord();
+        setWordRandom(newRandomWord)
+      }
+
     } else setShowToast(true);
 
   }
-  useEffect(() => {
-    const newWordShow = [];
-
-    for (let i in wordRandom) {
-      const letter = wordRandom[i];
-      const letterPressValue = letterPress[i];
-      const letterState = stateLetter[i]
-      const objeto = {
-        letter: letter,
-        letterPress: letterPressValue,
-        stateLetter: letterState
-      };
-      newWordShow.push(objeto);
-    }
-    setWordShow(newWordShow);
-  }, [wordRandom, letterPress, stateLetter]);
 
   function handleKeySelect(pressedKey) {
     const letter = pressedKey.target.innerText;
@@ -125,25 +121,22 @@ function BoxLetter() {
     }
     setShowToast(false)
   }
+
   return (
     <section>
       {showToast === true ? <ToastNotification /> : undefined}
-      <BoxRow letterPress={letterPress} wordRandom={wordRandom}/>
-      <BoxRow letterPress={letterPress} wordRandom={wordRandom}/>
-      <BoxRow letterPress={letterPress} wordRandom={wordRandom}/>
-      <BoxRow letterPress={letterPress} wordRandom={wordRandom}/>
-      <BoxRow letterPress={letterPress} wordRandom={wordRandom}/>
-      {/* <article className="w-450 m-auto flex justify-between items-center my-5">
-        {wordShow.map(({ wordRandom, letterPress, stateLetter }, i) => (
-          <Box key={i} letterPress={letterPress} stateLetter={stateLetter} />
-        ))}
-      </article> */}
+      {completWord.map((word, index) => (
+        <BoxRow key={`${index}-${word}`} letterPress={word} wordRandom={wordRandom} />
+      ))}
+      <BoxCurrent letterPress={letterPress} />
+      {Array.from(Array(turn)).map((_, index) => (
+        < BoxEmpty key={index} letterPress={letterPress} />
+      ))}
 
       <Keyboard
         handleKeySelect={handleKeySelect}
         handleDeleteLetter={handleDeleteLetter}
         handleValidator={handleValidator}
-        letterPress={letterPress}
         wordRandom={wordRandom} />
     </section>
   );
